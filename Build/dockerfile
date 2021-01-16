@@ -1,0 +1,21 @@
+FROM python:3.6-slim
+
+EXPOSE 5000
+
+ARG ZOOM_API_TOKEN
+ARG ZOOM_MEETING_PASSWORD
+ARG MONGODB_IP
+
+ENV ZOOM_API_TOKEN=$ZOOM_API_TOKEN
+ENV ZOOM_MEETING_PASSWORD=$ZOOM_MEETING_PASSWORD
+ENV MONGODB_IP=$MONGODB_IP
+
+RUN pip install flask flask-restful cerberus pymongo requests
+
+COPY . /home/src
+
+WORKDIR /home/src
+
+ENV PYTHONPATH=/home/src
+
+CMD ["python", "routes.py"]

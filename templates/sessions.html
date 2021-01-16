@@ -1,0 +1,25 @@
+{% block content %}
+<div>
+  {% if live_sessions %}
+    <p><strong>Live Sessions</strong></p>
+    <table style="border-collapse: collapse; width: 100%;" border="1">
+    <tbody>
+      <tr>
+        <th>Meeting Id</th>
+        <th>Number of Participants</th>
+        <th>Actions</th>
+      </tr>
+      {% for sess in live_sessions %}
+        <tr>
+          <td style="width: 50%;"><span>{{ sess['entity_id'] }}</span></td>
+          <td style="width: 20%;"><span>{{ sess['num_participants'] }}</span></td>
+          <td style="width: 30%;"><input id={{ sess['entity_id'] }} type = "button" onclick = "end(this.id)" value = "End" /></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  {% else %}
+  <p><strong>No Live Sessions Running</strong></p>
+  {% endif %}
+</div>
+{% endblock %}

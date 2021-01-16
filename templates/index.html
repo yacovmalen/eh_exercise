@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Jennifer's Online Clinic</title>
+  </head>
+  <body>
+    <table style="border-collapse: collapse; width: 100%; height: 132px;" border="1">
+      <tbody>
+        <tr style="height: 46px;">
+          <td style="width: 100%; height: 46px; background-color: #0000ff;">
+            <p><strong><span style="color: #ffffff; font-size: 30px;"><a style="background-color: #0000ff; color: #ffffff;" href="https://www.notion.so/Jennifer-s-online-clinic-4082662698fd47d2845493a457459615">Jennifer's online clinic</a></span></strong></p>
+            </td>
+        </tr>
+        <tr style="height: 68px;">
+          <td style="width: 100%; height: 68px;">
+            <div class="statecontainer">
+            {% include 'sessions.html' %}
+            </div>
+          </td>
+        </tr>
+         <tr style="height: 20px;">
+          <td style="width: 100%; height: 20px;">
+            &nbsp;
+          </td>
+        </tr>
+        <tr style="height: 68px;">
+          <td style="width: 100%; height: 68px;">
+            <div class="availablecontainer">
+            {% include 'available.html' %}
+            </div>
+          </td>
+        </tr>
+        <tr style="height: 18px;">
+          <td style="width: 100%; height: 18px;">
+            <p>&copy;2021 Yacov Malen Eleos Health Coding Exercise</p>
+            <p><a href="mailto:yacovmalen@gmail.com">yacovmalen@gmail.com</a></p>
+            <p><a href="https://www.linkedin.com/in/ymalen/" target="_blank" rel="noopener"><img src="https://html-online.com/demo/social-share-buttons/social//linkedin.svg" alt="Linkedin" width="17" height="17" /></a> linkedin.com/in/ymalen/</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+      function updateTable(){
+        $.ajax({
+          url: "api/v1/sessions/state",
+          headers: {'SECURITY_TOKEN_AUTHENTICATION_KEY': 'ExampleAccess'},
+          method: "GET",
+          success: function(response) {
+            $(".statecontainer").html(response);
+          },
+          error: function(xhr) {
+          }
+        });
+      
+      }
+      setInterval('updateTable()', 5*1000);
+    </script>
+
+    <script>
+      function updateAvailable(){
+        $.ajax({
+          url: "api/v1/sessions/get-available",
+          headers: {'SECURITY_TOKEN_AUTHENTICATION_KEY': 'ExampleAccess'},
+          method: "GET",
+          success: function(response) {
+            $(".availablecontainer").html(response);
+          },
+          error: function(xhr) {
+          }
+        });    
+      }
+      setInterval('updateAvailable()', 5*1000);
+    </script>
+
+    <script>
+      function end(id){
+        $.ajax({
+          url: `api/v1/sessions/${id}/end`,
+          headers: {'SECURITY_TOKEN_AUTHENTICATION_KEY': 'ExampleAccess'},
+          method: "POST",
+          success: function(response) {
+          },
+          error: function(xhr) {
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
